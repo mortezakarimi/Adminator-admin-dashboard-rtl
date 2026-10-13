@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf src/assets/scripts/app.js src/assets/scripts/index.js src/assets/scripts/charts src/assets/scripts/chat src/assets/scripts/components src/assets/scripts/constants src/assets/scripts/datatable src/assets/scripts/datepicker src/assets/scripts/email src/assets/scripts/fullcalendar src/assets/scripts/googleMaps src/assets/scripts/masonry src/assets/scripts/popover src/assets/scripts/scrollbar src/assets/scripts/search src/assets/scripts/skycons src/assets/scripts/ui src/assets/scripts/utils src/assets/scripts/vectorMaps)",
+      "Bash(rm -rf src/assets/styles/index.scss src/assets/styles/spec src/assets/styles/utils src/assets/styles/vendor)",
+      "Bash(rm -rf tests)",
+      "Read(//Users/silkalns/Fresh Projects/Adminator-admin-dashboard/**)",
+      "Bash(ls dist/*.js)",
+      "Bash(ls dist/*.css)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(git tag *)",
+      "Bash(git config *)"
+    ]
+  }
+}

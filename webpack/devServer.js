@@ -10,9 +10,7 @@ const
 // @DevServer Configs
 // ------------------
 
-/**
- * [1] : To enable local network testing
- */
+// Set HOST=0.0.0.0 explicitly when testing on the local network.
 
 const devServer = {
   static: {
@@ -20,15 +18,15 @@ const devServer = {
     watch: true,
   },
   historyApiFallback: true,
-  port: manifest.IS_PRODUCTION ? 3001 : 3000,
+  port: manifest.IS_PRODUCTION ? 3001 : 4000,
   compress: manifest.IS_PRODUCTION,
   client: {
     overlay: true,
     progress: !manifest.IS_PRODUCTION,
   },
   hot: !manifest.IS_PRODUCTION,
-  host: '0.0.0.0',
-  allowedHosts: 'all', // [1]
+  host: process.env.HOST || '127.0.0.1',
+  allowedHosts: 'auto',
   devMiddleware: {
     stats: {
       assets: true,

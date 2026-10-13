@@ -1,0 +1,44 @@
+/* ============ CHARTS PAGE ============ */
+
+.chart-pad { position: relative; padding: 8px 0 4px; }
+.chart-canvas-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 240px;
+}
+
+.chart-legend {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+}
+.chart-legend-item {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px;
+  color: var(--t-muted);
+}
+.chart-legend-item .swatch {
+  width: 10px; height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.chart-meta-row {
+  display: flex; gap: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border-soft);
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.chart-meta-cell { display: flex; flex-direction: column; gap: 3px; min-width: 90px; }
+.chart-meta-label { font-size: 10.5px; color: var(--t-light); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; }
+.chart-meta-value {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+  color: var(--t-base);
+}
+.chart-meta-value.up { color: var(--success); }
+.chart-meta-value.down { color: var(--danger); }

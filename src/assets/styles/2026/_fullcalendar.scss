@@ -1,0 +1,89 @@
+/* ============ FULLCALENDAR 7 — TOKEN BRIDGE ============ */
+
+/* FullCalendar 7 renders hashed class names (.fc-Kf, .fc-6T …) that change
+   between builds, so the v6 approach of overriding .fc-daygrid-day and friends
+   is no longer possible — and no longer necessary.
+
+   v7 themes are driven entirely by CSS custom properties. vendor-fullcalendar.js
+   loads the `classic` theme's structure but deliberately skips its palette.css;
+   this file supplies the palette instead, mapping every --fc-classic-* variable
+   onto a 2026 token. Because those tokens already flip with [data-theme], the
+   calendar follows light/dark mode for free, with no re-render. */
+
+[data-fc],
+.fc {
+  /* Surfaces and text */
+  --fc-classic-background:        var(--bg-card);
+  --fc-classic-foreground:        var(--t-base);
+  --fc-classic-muted:             var(--bg-muted);
+  --fc-classic-muted-foreground:  var(--t-muted);
+  --fc-classic-faint:             var(--bg-hover);
+  --fc-classic-faint-foreground:  var(--t-light);
+  --fc-classic-strong:            var(--bg-hover);
+  --fc-classic-stronger:          var(--bg-muted);
+  --fc-classic-strongest:         var(--t-base);
+
+  /* Lines */
+  --fc-classic-border:            var(--border);
+  --fc-classic-strong-border:     var(--border);
+  --fc-classic-border-style:      solid;
+
+  /* Brand */
+  --fc-classic-primary:            var(--primary);
+  --fc-classic-primary-foreground: var(--t-inverse);
+  --fc-classic-ring-color:         var(--primary-ring);
+
+  /* State */
+  --fc-classic-today:      var(--primary-soft);
+  --fc-classic-now:        var(--danger);
+  --fc-classic-highlight:  var(--primary-soft);
+
+  /* Buttons. The page renders its own toolbar, but FullCalendar still draws
+     buttons inside the "+N more" popover and the list view. */
+  --fc-classic-button:               var(--bg-muted);
+  --fc-classic-button-border:        var(--border);
+  --fc-classic-button-foreground:    var(--t-base);
+  --fc-classic-button-strong:        var(--primary);
+  --fc-classic-button-strong-border: var(--primary);
+  --fc-classic-button-outline:       var(--primary-ring);
+
+  /* Default event colour; overridden per category below.
+     NB: set --fc-classic-event, not --fc-event-color. FullCalendar writes
+     `--fc-event-color: var(--fc-classic-event)` as an *inline* style on every
+     event element, and an inline style outranks any class rule — so setting
+     --fc-event-color here would simply be ignored. --fc-classic-event is the
+     variable that inline declaration reads, and is normally supplied by the
+     theme's palette.css, which we deliberately don't load. */
+  --fc-classic-event:          var(--primary-soft);
+  --fc-classic-event-contrast: var(--primary);
+  --fc-classic-background-event: var(--success);
+
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  height: 100%;
+}
+
+/* Event categories.
+   The `classNames` on each seed event (see calendar.js) still land on the event
+   element in v7, so these keep working. With eventDisplay: 'block' the theme
+   paints the event background from --fc-event-color and its text from
+   --fc-event-contrast-color, so the soft/strong pairing reproduces the v6 pill:
+   a tinted background with the saturated hue as the label. */
+.fc-cat-work     { --fc-classic-event: var(--primary-soft); --fc-classic-event-contrast: var(--primary); }
+.fc-cat-team     { --fc-classic-event: var(--success-soft); --fc-classic-event-contrast: var(--success); }
+.fc-cat-personal { --fc-classic-event: var(--purple-soft);  --fc-classic-event-contrast: var(--purple); }
+.fc-cat-travel   { --fc-classic-event: var(--info-soft);    --fc-classic-event-contrast: var(--info); }
+.fc-cat-finance  { --fc-classic-event: var(--warning-soft); --fc-classic-event-contrast: var(--warning); }
+.fc-cat-birthday { --fc-classic-event: var(--pink-soft);    --fc-classic-event-contrast: var(--pink); }
+
+/* Column headers (SUN MON TUE …), rendered via dayHeaderContent so there is a
+   stable class to target. Note there is no `.fc` ancestor to qualify with — v7's
+   calendar root carries only hashed classes. */
+.fc-dow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--t-light);
+}

@@ -1,1021 +1,481 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Email</title>
-    <style>
-      #loader {
-        transition: all 0.3s ease-in-out;
-        opacity: 1;
-        visibility: visible;
-        position: fixed;
-        height: 100vh;
-        width: 100%;
-        background: #fff;
-        z-index: 90000;
-      }
-
-      #loader.fadeOut {
-        opacity: 0;
-        visibility: hidden;
-      }
-
-
-
-      .spinner {
-        width: 40px;
-        height: 40px;
-        position: absolute;
-        top: calc(50% - 20px);
-        left: calc(50% - 20px);
-        background-color: #333;
-        border-radius: 100%;
-        -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-        animation: sk-scaleout 1.0s infinite ease-in-out;
-      }
-
-      @-webkit-keyframes sk-scaleout {
-        0% { -webkit-transform: scale(0) }
-        100% {
-          -webkit-transform: scale(1.0);
-          opacity: 0;
-        }
-      }
-
-      @keyframes sk-scaleout {
-        0% {
-          -webkit-transform: scale(0);
-          transform: scale(0);
-        } 100% {
-          -webkit-transform: scale(1.0);
-          transform: scale(1.0);
-          opacity: 0;
-        }
-      }
-    </style>
-  </head>
-  <body class="app">
-    <!-- @TOC -->
-    <!-- =================================================== -->
-    <!--
-      + @Page Loader
-      + @App Content
-          - #Left Sidebar
-              > $Sidebar Header
-              > $Sidebar Menu
-
-          - #Main
-              > $Topbar
-              > $App Screen Content
-    -->
-
-    <!-- @Page Loader -->
-    <!-- =================================================== -->
-    <div id='loader'>
-      <div class="spinner"></div>
-    </div>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Inter+Tight:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+    <title>Email · 2026 Redesign Preview</title>
     <script>
-      window.addEventListener('load', function load() {
-        const loader = document.getElementById('loader');
-        setTimeout(function() {
-          loader.classList.add('fadeOut');
-        }, 300);
-      });
+      (function () {
+        try {
+          var saved = localStorage.getItem('dash26-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
     </script>
+  </head>
+  <body data-active="email" data-crumbs="Communications | Email | Inbox">
+    <div class="shell">
+      <div data-shell-sidebar></div>
+      <div class="main">
+        <div data-shell-topbar></div>
+        <main class="content">
+        <!-- HERO -->
+        <section class="hero mail-hero">
+          <div class="hero-text">
+            <span class="eyebrow" id="heroDate">Thursday · April 23 · 2026</span>
+            <h1 class="hero-title">Inbox · <span class="accent">12 unread</span></h1>
+            <p class="hero-sub">You're caught up on everything before today. <strong>3 new threads</strong> need a reply, and <em>2 invoices</em> are awaiting your approval.</p>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn--ghost">
+              <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+              Refresh
+            </button>
+            <button class="btn btn--primary">
+              <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4z"/></svg>
+              Compose
+            </button>
+          </div>
+        </section>
 
-    <!-- @App Content -->
-    <!-- =================================================== -->
-    <div>
-      <!-- #Left Sidebar ==================== -->
-      <div class="sidebar">
-        <div class="sidebar-inner">
-          <!-- ### $Sidebar Header ### -->
-          <div class="sidebar-logo">
-            <div class="peers ai-c fxw-nw">
-              <div class="peer peer-greed">
-                <a class="sidebar-link td-n" href="index.html">
-                  <div class="peers ai-c fxw-nw">
-                    <div class="peer">
-                      <div class="logo">
-                        <img src="assets/static/images/logo.png" alt="">
-                      </div>
-                    </div>
-                    <div class="peer peer-greed">
-                      <h5 class="lh-1 mB-0 logo-text">Adminator</h5>
-                    </div>
-                  </div>
-                </a>
+        <!-- ============ EMAIL 3-PANE ============ -->
+        <section class="mail-shell" aria-label="Email">
+
+          <!-- ===== Folder rail ===== -->
+          <aside class="mail-rail">
+            <a class="mail-compose" href="#">
+              <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4z"/></svg>
+              Compose
+            </a>
+
+            <div class="mail-rail-section">
+              <div class="mail-rail-label">Folders</div>
+              <a class="mail-folder is-active" href="#">
+                <svg viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+                <span class="mail-folder-name">Inbox</span>
+                <span class="mail-folder-count is-strong">12</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span class="mail-folder-name">Starred</span>
+                <span class="mail-folder-count">5</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <span class="mail-folder-name">Snoozed</span>
+                <span class="mail-folder-count">3</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                <span class="mail-folder-name">Sent</span>
+                <span class="mail-folder-count">128</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                <span class="mail-folder-name">Drafts</span>
+                <span class="mail-folder-count">2</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <span class="mail-folder-name">Spam</span>
+                <span class="mail-folder-count">9</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6 18 20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                <span class="mail-folder-name">Trash</span>
+              </a>
+            </div>
+
+            <div class="mail-rail-section">
+              <div class="mail-rail-label">Labels</div>
+              <a class="mail-folder" href="#">
+                <span class="mail-label-dot" style="background: var(--primary);"></span>
+                <span class="mail-folder-name">Work</span>
+                <span class="mail-folder-count">42</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <span class="mail-label-dot" style="background: var(--success);"></span>
+                <span class="mail-folder-name">Team</span>
+                <span class="mail-folder-count">28</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <span class="mail-label-dot" style="background: var(--purple);"></span>
+                <span class="mail-folder-name">Finance</span>
+                <span class="mail-folder-count">11</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <span class="mail-label-dot" style="background: var(--warning);"></span>
+                <span class="mail-folder-name">Invoices</span>
+                <span class="mail-folder-count">6</span>
+              </a>
+              <a class="mail-folder" href="#">
+                <span class="mail-label-dot" style="background: var(--info);"></span>
+                <span class="mail-folder-name">Travel</span>
+                <span class="mail-folder-count">4</span>
+              </a>
+            </div>
+
+            <div class="mail-rail-storage">
+              <div class="mail-storage-head">
+                <span>Storage</span>
+                <span class="num">7.4 / 15 GB</span>
               </div>
-              <div class="peer">
-                <div class="mobile-toggle sidebar-toggle">
-                  <a href="" class="td-n">
-                    <i class="ti-arrow-circle-left"></i>
-                  </a>
+              <div class="mail-storage-bar"><div class="mail-storage-bar-fill" style="width: 49%;"></div></div>
+              <div class="mail-storage-foot">49% used · <a href="#">Upgrade</a></div>
+            </div>
+          </aside>
+
+          <!-- ===== Message list ===== -->
+          <section class="mail-list">
+            <div class="mail-list-head">
+              <div class="mail-list-toptools">
+                <div class="mail-list-title">Inbox<span class="meta">12 UNREAD · 246 TOTAL</span></div>
+                <div class="mail-list-tools">
+                  <button class="mail-tool" aria-label="Filter">
+                    <svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                  </button>
+                  <button class="mail-tool" aria-label="Sort">
+                    <svg viewBox="0 0 24 24"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+                  </button>
                 </div>
               </div>
+              <div class="mail-search">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" placeholder="Search mail…">
+              </div>
             </div>
-          </div>
 
-          <!-- ### $Sidebar Menu ### -->
-          <ul class="sidebar-menu scrollable pos-r">
-            <li class="nav-item mT-30 actived">
-              <a class="sidebar-link" href="index.html">
-                <span class="icon-holder">
-                  <i class="c-blue-500 ti-home"></i>
-                </span>
-                <span class="title">Dashboard</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class='sidebar-link' href="email.html">
-                <span class="icon-holder">
-                  <i class="c-brown-500 ti-email"></i>
-                </span>
-                <span class="title">Email</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class='sidebar-link' href="compose.html">
-                <span class="icon-holder">
-                  <i class="c-blue-500 ti-share"></i>
-                </span>
-                <span class="title">Compose</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class='sidebar-link' href="calendar.html">
-                <span class="icon-holder">
-                  <i class="c-deep-orange-500 ti-calendar"></i>
-                </span>
-                <span class="title">Calendar</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class='sidebar-link' href="chat.html">
-                <span class="icon-holder">
-                  <i class="c-deep-purple-500 ti-comment-alt"></i>
-                </span>
-                <span class="title">Chat</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class='sidebar-link' href="charts.html">
-                <span class="icon-holder">
-                  <i class="c-indigo-500 ti-bar-chart"></i>
-                </span>
-                <span class="title">Charts</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class='sidebar-link' href="forms.html">
-                <span class="icon-holder">
-                  <i class="c-light-blue-500 ti-pencil"></i>
-                </span>
-                <span class="title">Forms</span>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="sidebar-link" href="ui.html">
-                <span class="icon-holder">
-                    <i class="c-pink-500 ti-palette"></i>
-                  </span>
-                <span class="title">UI Elements</span>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                  <i class="c-orange-500 ti-layout-list-thumb"></i>
-                </span>
-                <span class="title">Tables</span>
-                <span class="arrow">
-                  <i class="ti-angle-right"></i>
-                </span>
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class='sidebar-link' href="basic-table.html">Basic Table</a>
-                </li>
-                <li>
-                  <a class='sidebar-link' href="datatable.html">Data Table</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                    <i class="c-purple-500 ti-map"></i>
-                  </span>
-                <span class="title">Maps</span>
-                <span class="arrow">
-                    <i class="ti-angle-right"></i>
-                  </span>
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a href="google-maps.html">Google Map</a>
-                </li>
-                <li>
-                  <a href="vector-maps.html">Vector Map</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                    <i class="c-red-500 ti-files"></i>
-                  </span>
-                <span class="title">Pages</span>
-                <span class="arrow">
-                    <i class="ti-angle-right"></i>
-                  </span>
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class='sidebar-link' href="blank.html">Blank</a>
-                </li>
-                <li>
-                  <a class='sidebar-link' href="404.html">404</a>
-                </li>
-                <li>
-                  <a class='sidebar-link' href="500.html">500</a>
-                </li>
-                <li>
-                  <a class='sidebar-link' href="signin.html">Sign In</a>
-                </li>
-                <li>
-                  <a class='sidebar-link' href="signup.html">Sign Up</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                  <i class="c-teal-500 ti-view-list-alt"></i>
-                </span>
-                <span class="title">Multiple Levels</span>
-                <span class="arrow">
-                  <i class="ti-angle-right"></i>
-                </span>
-              </a>
-              <ul class="dropdown-menu">
-                <li class="nav-item dropdown">
-                  <a href="javascript:void(0);">
-                    <span>Menu Item</span>
-                  </a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a href="javascript:void(0);">
-                    <span>Menu Item</span>
-                    <span class="arrow">
-                      <i class="ti-angle-right"></i>
+            <div class="mail-tabs">
+              <a class="mail-tab is-active" href="#">Primary <span class="num">8</span></a>
+              <a class="mail-tab" href="#">Updates <span class="num">3</span></a>
+              <a class="mail-tab" href="#">Promotions <span class="num">1</span></a>
+            </div>
+
+            <div class="mail-list-scroll">
+              <article class="mail-row is-unread">
+                <div class="mail-row-avatar ma-1">SK</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">Sara Kim</div>
+                    <div class="mail-row-time">10:42</div>
+                  </div>
+                  <div class="mail-row-subject">Q2 launch plan — review before Thursday</div>
+                  <div class="mail-row-preview">Hey John, attaching the latest deck and revised timeline. Two open questions on pricing — would love your call before…</div>
+                  <div class="mail-row-tags">
+                    <span class="mail-tag work">Work</span>
+                    <span class="mail-tag attach">
+                      <svg viewBox="0 0 24 24"><path d="m21 12-9 9a6 6 0 0 1-8-8l9-9a4 4 0 0 1 6 6l-9 9a2 2 0 0 1-3-3l9-9"/></svg>
+                      2
                     </span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a href="javascript:void(0);">Menu Item</a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);">Menu Item</a>
-                    </li>
+                  </div>
+                </div>
+                <div class="mail-star is-on" aria-label="Starred"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              </article>
+
+              <article class="mail-row is-active is-unread">
+                <div class="mail-row-avatar ma-2">LR</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">Leo Reyes</div>
+                    <div class="mail-row-time">09:18</div>
+                  </div>
+                  <div class="mail-row-subject">Dependency bump merged — all green</div>
+                  <div class="mail-row-preview">Morning! Just pushed the dependency upgrade to master. All 10 stale Dependabot PRs are closed and CI passed on first run. Quick…</div>
+                  <div class="mail-row-tags">
+                    <span class="mail-tag team">Team</span>
+                    <span class="mail-tag work">Work</span>
+                  </div>
+                </div>
+                <div class="mail-star" aria-label="Star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              </article>
+
+              <article class="mail-row is-unread">
+                <div class="mail-row-avatar ma-3">MD</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">Mira Doe</div>
+                    <div class="mail-row-time">08:05</div>
+                  </div>
+                  <div class="mail-row-subject">Invoice #INV-2026-104 ready for approval</div>
+                  <div class="mail-row-preview">Your monthly invoice from Northwind Studio is ready. Total $4,820.00 due May 7. Click below to review and approve before…</div>
+                  <div class="mail-row-tags">
+                    <span class="mail-tag finance">Finance</span>
+                    <span class="mail-tag invoice">Invoice</span>
+                    <span class="mail-tag attach">
+                      <svg viewBox="0 0 24 24"><path d="m21 12-9 9a6 6 0 0 1-8-8l9-9a4 4 0 0 1 6 6l-9 9a2 2 0 0 1-3-3l9-9"/></svg>
+                      1
+                    </span>
+                  </div>
+                </div>
+                <div class="mail-star" aria-label="Star"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              </article>
+
+              <article class="mail-row">
+                <div class="mail-row-avatar ma-4">AT</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">Anya Trent</div>
+                    <div class="mail-row-time">Yesterday</div>
+                  </div>
+                  <div class="mail-row-subject">Re: Brand workshop notes</div>
+                  <div class="mail-row-preview">Thanks for sharing — added a few comments inline. Big +1 on consolidating the secondary palette. Should we ping Marcus before…</div>
+                  <div class="mail-row-tags">
+                    <span class="mail-tag work">Work</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="mail-row is-unread">
+                <div class="mail-row-avatar ma-5">PV</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">Paolo Vega</div>
+                    <div class="mail-row-time">Yesterday</div>
+                  </div>
+                  <div class="mail-row-subject">Lisbon meetup — confirmed venue</div>
+                  <div class="mail-row-preview">Locked in the rooftop venue for May 22. Capacity 80, full A/V, and they can host the after-party until midnight. Need your…</div>
+                  <div class="mail-row-tags">
+                    <span class="mail-tag travel">Travel</span>
+                  </div>
+                </div>
+                <div class="mail-star is-on" aria-label="Starred"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              </article>
+
+              <article class="mail-row">
+                <div class="mail-row-avatar ma-6">JC</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">Jess Choi</div>
+                    <div class="mail-row-time">Tue</div>
+                  </div>
+                  <div class="mail-row-subject">Newsletter draft v3 — your edits welcome</div>
+                  <div class="mail-row-preview">Hey, I incorporated all the feedback from Friday's review. Could you take a final pass on the founder note section before we…</div>
+                  <div class="mail-row-tags">
+                    <span class="mail-tag team">Team</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="mail-row">
+                <div class="mail-row-avatar ma-1">FB</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">Finance Bot</div>
+                    <div class="mail-row-time">Mon</div>
+                  </div>
+                  <div class="mail-row-subject">March card statement available</div>
+                  <div class="mail-row-preview">Your March card statement is ready. Total spend $3,210.55 across 47 transactions. Auto-pay scheduled for April 28. View details…</div>
+                  <div class="mail-row-tags">
+                    <span class="mail-tag finance">Finance</span>
+                    <span class="mail-tag attach">
+                      <svg viewBox="0 0 24 24"><path d="m21 12-9 9a6 6 0 0 1-8-8l9-9a4 4 0 0 1 6 6l-9 9a2 2 0 0 1-3-3l9-9"/></svg>
+                      1
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="mail-row is-unread">
+                <div class="mail-row-avatar ma-2">RG</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">Rita Gomez</div>
+                    <div class="mail-row-time">Apr 19</div>
+                  </div>
+                  <div class="mail-row-subject">Coffee next week?</div>
+                  <div class="mail-row-preview">Long time no chat! I'll be in town Tue–Thu and would love to grab coffee if you're free. Mornings work best for me…</div>
+                </div>
+              </article>
+
+              <article class="mail-row">
+                <div class="mail-row-avatar ma-3">NS</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">Notion · Shared</div>
+                    <div class="mail-row-time">Apr 18</div>
+                  </div>
+                  <div class="mail-row-subject">3 pages updated in "Q2 OKRs"</div>
+                  <div class="mail-row-preview">Sara, Leo, and Mira made edits to pages you follow. View a summary of the changes and jump back into the docs…</div>
+                </div>
+              </article>
+
+              <article class="mail-row">
+                <div class="mail-row-avatar ma-4">GH</div>
+                <div class="mail-row-body">
+                  <div class="mail-row-top">
+                    <div class="mail-row-from">GitHub</div>
+                    <div class="mail-row-time">Apr 17</div>
+                  </div>
+                  <div class="mail-row-subject">[adminator] PR #482 merged into master</div>
+                  <div class="mail-row-preview">puikinsh merged "Add 2026 dashboard preview page" into master. 1 reviewer approved. CI passed all checks…</div>
+                  <div class="mail-row-tags">
+                    <span class="mail-tag work">Work</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- ===== Reader pane ===== -->
+          <section class="mail-reader">
+            <div class="reader-toolbar">
+              <div class="reader-tools-group">
+                <button class="mail-tool" aria-label="Back">
+                  <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                </button>
+                <span class="sep"></span>
+                <button class="mail-tool" aria-label="Archive">
+                  <svg viewBox="0 0 24 24"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+                </button>
+                <button class="mail-tool" aria-label="Delete">
+                  <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6 18 20a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                </button>
+                <button class="mail-tool" aria-label="Mark unread">
+                  <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                </button>
+                <button class="mail-tool" aria-label="Snooze">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </button>
+                <span class="sep"></span>
+                <button class="mail-tool" aria-label="Move to folder">
+                  <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                </button>
+                <button class="mail-tool" aria-label="Label">
+                  <svg viewBox="0 0 24 24"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                </button>
+              </div>
+              <div class="reader-tools-group">
+                <button class="mail-tool" aria-label="Previous">
+                  <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button class="mail-tool" aria-label="Next">
+                  <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+                <span class="sep"></span>
+                <button class="mail-tool" aria-label="More">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="reader-scroll">
+              <header class="reader-head">
+                <h1 class="reader-subject">Dependency bump merged — all green</h1>
+                <div class="reader-meta-row">
+                  <span class="mail-tag team">Team</span>
+                  <span class="mail-tag work">Work</span>
+                  <span class="mail-tag attach">
+                    <svg viewBox="0 0 24 24"><path d="m21 12-9 9a6 6 0 0 1-8-8l9-9a4 4 0 0 1 6 6l-9 9a2 2 0 0 1-3-3l9-9"/></svg>
+                    3 attachments
+                  </span>
+                </div>
+              </header>
+
+              <article class="reader-card">
+                <div class="reader-card-head">
+                  <div class="reader-avatar ma-2">LR</div>
+                  <div class="reader-from-block">
+                    <div class="reader-from-name">Leo Reyes</div>
+                    <div class="reader-from-email">leo@adminator.app</div>
+                    <div class="reader-from-meta">to <strong>me</strong>, Sara Kim, Mira Doe</div>
+                  </div>
+                  <div class="reader-time-block">
+                    Today, 09:18
+                    <span class="mono">42 MIN AGO</span>
+                  </div>
+                  <div class="reader-actions">
+                    <button class="mail-tool" aria-label="Reply">
+                      <svg viewBox="0 0 24 24"><polyline points="9 17 4 12 9 7"/><path d="M20 18v-2a4 4 0 0 0-4-4H4"/></svg>
+                    </button>
+                    <button class="mail-tool" aria-label="Forward">
+                      <svg viewBox="0 0 24 24"><polyline points="15 17 20 12 15 7"/><path d="M4 18v-2a4 4 0 0 1 4-4h12"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="reader-body">
+                  <p>Morning, John —</p>
+                  <p>Just pushed the big dependency upgrade to <strong>master</strong>. Quick rundown of what changed and what's coming next:</p>
+                  <ul>
+                    <li>All <strong>10 stale Dependabot PRs</strong> are now closed.</li>
+                    <li>Webpack bumped to <strong>5.101.3</strong>, Bootstrap to <strong>5.3.8</strong>, Chart.js to <strong>4.5.0</strong>.</li>
+                    <li>Removed the last jQuery references in the calendar component (~14kb saved).</li>
+                    <li>CI passed on first run, no flaky tests this time around 🎉</li>
                   </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- #Main ============================ -->
-      <div class="page-container">
-        <!-- ### $Topbar ### -->
-        <div class="header navbar">
-          <div class="header-container">
-            <ul class="nav-left">
-              <li>
-                <a id='sidebar-toggle' class="sidebar-toggle" href="javascript:void(0);">
-                  <i class="ti-menu"></i>
-                </a>
-              </li>
-              <li class="search-box">
-                <a class="search-toggle no-pdd-right" href="javascript:void(0);">
-                  <i class="search-icon ti-search pdd-right-10"></i>
-                  <i class="search-icon-close ti-close pdd-right-10"></i>
-                </a>
-              </li>
-              <li class="search-input">
-                <input class="form-control" type="text" placeholder="Search...">
-              </li>
-            </ul>
-            <ul class="nav-right">
-              <li class="notifications dropdown">
-                <span class="counter bgc-red">3</span>
-                <a href="" class="dropdown-toggle no-after" data-bs-toggle="dropdown">
-                  <i class="ti-bell"></i>
-                </a>
-
-                <ul class="dropdown-menu">
-                  <li class="pX-20 pY-15 bdB">
-                    <i class="ti-bell pR-10"></i>
-                    <span class="fsz-sm fw-600 c-grey-900">Notifications</span>
-                  </li>
-                  <li>
-                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
-                      <li>
-                        <a href="" class='peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100'>
-                          <div class="peer mR-15">
-                            <img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/1.jpg" alt="">
-                          </div>
-                          <div class="peer peer-greed">
-                            <span>
-                              <span class="fw-500">John Doe</span>
-                              <span class="c-grey-600">liked your <span class="text-dark">post</span>
-                              </span>
-                            </span>
-                            <p class="m-0">
-                              <small class="fsz-xs">5 mins ago</small>
-                            </p>
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" class='peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100'>
-                          <div class="peer mR-15">
-                            <img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/2.jpg" alt="">
-                          </div>
-                          <div class="peer peer-greed">
-                            <span>
-                              <span class="fw-500">Moo Doe</span>
-                              <span class="c-grey-600">liked your <span class="text-dark">cover image</span>
-                              </span>
-                            </span>
-                            <p class="m-0">
-                              <small class="fsz-xs">7 mins ago</small>
-                            </p>
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" class='peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100'>
-                          <div class="peer mR-15">
-                            <img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/3.jpg" alt="">
-                          </div>
-                          <div class="peer peer-greed">
-                            <span>
-                              <span class="fw-500">Lee Doe</span>
-                              <span class="c-grey-600">commented on your <span class="text-dark">video</span>
-                              </span>
-                            </span>
-                            <p class="m-0">
-                              <small class="fsz-xs">10 mins ago</small>
-                            </p>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="pX-20 pY-15 ta-c bdT">
-                    <span>
-                      <a href="" class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i class="ti-angle-right fsz-xs mL-10"></i></a>
-                    </span>
-                  </li>
-                </ul>
-              </li>
-              <li class="notifications dropdown">
-                <span class="counter bgc-blue">3</span>
-                <a href="" class="dropdown-toggle no-after" data-bs-toggle="dropdown">
-                  <i class="ti-email"></i>
-                </a>
-
-                <ul class="dropdown-menu">
-                  <li class="pX-20 pY-15 bdB">
-                    <i class="ti-email pR-10"></i>
-                    <span class="fsz-sm fw-600 c-grey-900">Emails</span>
-                  </li>
-                  <li>
-                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm">
-                      <li>
-                        <a href="" class='peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100'>
-                          <div class="peer mR-15">
-                            <img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/1.jpg" alt="">
-                          </div>
-                          <div class="peer peer-greed">
-                            <div>
-                              <div class="peers jc-sb fxw-nw mB-5">
-                                <div class="peer">
-                                  <p class="fw-500 mB-0">John Doe</p>
-                                </div>
-                                <div class="peer">
-                                  <small class="fsz-xs">5 mins ago</small>
-                                </div>
-                              </div>
-                              <span class="c-grey-600 fsz-sm">
-                                Want to create your own customized data generator for your app...
-                              </span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" class='peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100'>
-                          <div class="peer mR-15">
-                            <img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/2.jpg" alt="">
-                          </div>
-                          <div class="peer peer-greed">
-                            <div>
-                              <div class="peers jc-sb fxw-nw mB-5">
-                                <div class="peer">
-                                  <p class="fw-500 mB-0">Moo Doe</p>
-                                </div>
-                                <div class="peer">
-                                  <small class="fsz-xs">15 mins ago</small>
-                                </div>
-                              </div>
-                              <span class="c-grey-600 fsz-sm">
-                                Want to create your own customized data generator for your app...
-                              </span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="" class='peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100'>
-                          <div class="peer mR-15">
-                            <img class="w-3r bdrs-50p" src="https://randomuser.me/api/portraits/men/3.jpg" alt="">
-                          </div>
-                          <div class="peer peer-greed">
-                            <div>
-                              <div class="peers jc-sb fxw-nw mB-5">
-                                <div class="peer">
-                                  <p class="fw-500 mB-0">Lee Doe</p>
-                                </div>
-                                <div class="peer">
-                                  <small class="fsz-xs">25 mins ago</small>
-                                </div>
-                              </div>
-                              <span class="c-grey-600 fsz-sm">
-                                Want to create your own customized data generator for your app...
-                              </span>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="pX-20 pY-15 ta-c bdT">
-                    <span>
-                      <a href="email.html" class="c-grey-600 cH-blue fsz-sm td-n">View All Email <i class="fs-xs ti-angle-right mL-10"></i></a>
-                    </span>
-                  </li>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-bs-toggle="dropdown">
-                  <div class="peer mR-10">
-                    <img class="w-2r bdrs-50p" src="https://randomuser.me/api/portraits/men/10.jpg" alt="">
+                  <p>I've attached the bundle-size delta and the migration notes. The only thing I'd flag — the new FullCalendar release moves a few CSS variables around, so the dark-mode preview will need a quick visual pass. Sara already has a draft fix in <a href="#">PR #487</a>.</p>
+                  <div class="reader-quote">
+                    "Wins of the week: cleaner dependency graph, faster cold-start, and we finally retired the legacy build scripts."
                   </div>
-                  <div class="peer">
-                    <span class="fsz-sm c-grey-900">John Doe</span>
-                  </div>
-                </a>
-                <ul class="dropdown-menu fsz-sm">
-                  <li>
-                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                      <i class="ti-settings mR-10"></i>
-                      <span>Setting</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                      <i class="ti-user mR-10"></i>
-                      <span>Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="email.html" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                      <i class="ti-email mR-10"></i>
-                      <span>Messages</span>
-                    </a>
-                  </li>
-                  <li role="separator" class="divider"></li>
-                  <li>
-                    <a href="" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                      <i class="ti-power-off mR-10"></i>
-                      <span>Logout</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- ### $App Screen Content ### -->
-        <main class='main-content bgc-grey-100'>
-          <div id='mainContent'>
-            <div class="full-container">
-              <div class="email-app">
-                <div class="email-side-nav remain-height ov-h">
-                  <div class="h-100 layers">
-                    <div class="p-20 bgc-grey-100 layer w-100">
-                      <a href="compose.html" class="btn btn-danger d-grid">New Message</a>
-                    </div>
-                    <div class="scrollable pos-r bdT layer w-100 fxg-1">
-                      <ul class="p-20 nav flex-column">
-                        <li class="nav-item">
-                          <a href="javascript:void(0)" class="nav-link c-grey-800 cH-blue-500 actived">
-                            <div class="peers ai-c jc-sb">
-                              <div class="peer peer-greed">
-                                <i class="mR-10 ti-email"></i>
-                                <span>Inbox</span>
-                              </div>
-                              <div class="peer">
-                                <span class="badge rounded-pill bgc-deep-purple-50 c-deep-purple-700">+99</span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="" class="nav-link c-grey-800 cH-blue-500">
-                            <div class="peers ai-c jc-sb">
-                              <div class="peer peer-greed">
-                                <i class="mR-10 ti-share"></i>
-                                <span>Sent</span>
-                              </div>
-                              <div class="peer">
-                                <span class="badge rounded-pill bgc-green-50 c-green-700">12</span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="" class="nav-link c-grey-800 cH-blue-500">
-                            <div class="peers ai-c jc-sb">
-                              <div class="peer peer-greed">
-                                <i class="mR-10 ti-star"></i>
-                                <span>Important</span>
-                              </div>
-                              <div class="peer">
-                                <span class="badge rounded-pill bgc-blue-50 c-blue-700">3</span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="" class="nav-link c-grey-800 cH-blue-500">
-                            <div class="peers ai-c jc-sb">
-                              <div class="peer peer-greed">
-                                <i class="mR-10 ti-file"></i>
-                                <span>Drafts</span>
-                              </div>
-                              <div class="peer">
-                                <span class="badge rounded-pill bgc-amber-50 c-amber-700">5</span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="" class="nav-link c-grey-800 cH-blue-500">
-                            <div class="peers ai-c jc-sb">
-                              <div class="peer peer-greed">
-                                <i class="mR-10 ti-alert"></i>
-                                <span>Spam</span>
-                              </div>
-                              <div class="peer">
-                                <span class="badge rounded-pill bgc-red-50 c-red-700">1</span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="" class="nav-link c-grey-800 cH-blue-500">
-                            <div class="peers ai-c jc-sb">
-                              <div class="peer peer-greed">
-                                <i class="mR-10 ti-trash"></i>
-                                <span>Trash</span>
-                              </div>
-                              <div class="peer">
-                                <span class="badge rounded-pill bgc-red-50 c-red-700">+99</span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                  <p>Let me know if you spot anything off in staging — happy to roll back individual packages if needed.</p>
+                  <p>— Leo</p>
                 </div>
-              <div class="email-wrapper row remain-height bgc-white ov-h">
-                <div class="email-list h-100 layers">
-                  <div class="layer w-100">
-                    <div class="bgc-grey-100 peers ai-c jc-sb p-20 fxw-nw">
-                      <div class="peer">
-                        <div class="btn-group" role="group">
-                          <button type="button" class="email-side-toggle d-n@md+ btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-menu"></i>
-                          </button>
-                          <button type="button" class="btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-folder"></i>
-                          </button>
-                          <button type="button" class="btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-tag"></i>
-                          </button>
-                          <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn cur-p bgc-white no-after dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ti-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu fsz-sm" aria-labelledby="btnGroupDrop1">
-                              <li>
-                                <a href="" class="d-b td-n pY-5 pX-10 bgcH-grey-100 c-grey-700">
-                                  <i class="ti-trash mR-10"></i>
-                                  <span>Delete</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="" class="d-b td-n pY-5 pX-10 bgcH-grey-100 c-grey-700">
-                                  <i class="ti-alert mR-10"></i>
-                                  <span>Mark as Spam</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="" class="d-b td-n pY-5 pX-10 bgcH-grey-100 c-grey-700">
-                                  <i class="ti-star mR-10"></i>
-                                  <span>Star</span>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="peer">
-                        <div class="btn-group" role="group">
-                          <button type="button" class="fsz-xs btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-angle-left"></i>
-                          </button>
-                          <button type="button" class="fsz-xs btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-angle-right"></i>
-                          </button>
-                        </div>
+
+                <div class="reader-attach">
+                  <div class="reader-attach-head">
+                    <svg viewBox="0 0 24 24"><path d="m21 12-9 9a6 6 0 0 1-8-8l9-9a4 4 0 0 1 6 6l-9 9a2 2 0 0 1-3-3l9-9"/></svg>
+                    3 Attachments
+                  </div>
+                  <div class="reader-attach-grid">
+                    <div class="reader-attach-item">
+                      <div class="attach-ico pdf">PDF</div>
+                      <div class="attach-meta">
+                        <div class="attach-name">migration-notes.pdf</div>
+                        <div class="attach-size">428 KB</div>
                       </div>
                     </div>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="bdT bdB">
-                      <input type="text" class="form-control m-0 bdw-0 pY-15 pX-20" placeholder="Search...">
+                    <div class="reader-attach-item">
+                      <div class="attach-ico xls">XLS</div>
+                      <div class="attach-meta">
+                        <div class="attach-name">bundle-size-delta.xlsx</div>
+                        <div class="attach-size">62 KB</div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="layer w-100 fxg-1 scrollable pos-r">
-                    <div class="">
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
-                      </div>
-                      <div class="email-list-item peers fxw-nw p-20 bdB bgcH-grey-100 cur-p">
-                        <div class="peer mR-10">
-                          <div class="checkbox checkbox-circle checkbox-info peers ai-c">
-                            <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                            <label for="inputCall1" class="form-label peers peer-greed js-sb ai-c"></label>
-                          </div>
-                        </div>
-                        <div class="peer peer-greed ov-h">
-                          <div class="peers ai-c">
-                            <div class="peer peer-greed">
-                              <h6>John Doe</h6>
-                            </div>
-                            <div class="peer">
-                              <small>1 min ago</small>
-                            </div>
-                          </div>
-                          <h5 class="fsz-def tt-c c-grey-900">title goes here</h5>
-                          <span class="whs-nw w-100 ov-h tov-e d-b">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</span>
-                        </div>
+                    <div class="reader-attach-item">
+                      <div class="attach-ico img">PNG</div>
+                      <div class="attach-meta">
+                        <div class="attach-name">ci-screenshot.png</div>
+                        <div class="attach-size">1.1 MB</div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="email-content h-100">
-                  <div class="h-100 scrollable pos-r">
-                    <div class="bgc-grey-100 peers ai-c jc-sb p-20 fxw-nw d-n@md+">
-                      <div class="peer">
-                        <div class="btn-group" role="group">
-                          <button type="button" class="back-to-mailbox btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-angle-left"></i>
-                          </button>
-                          <button type="button" class="btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-folder"></i>
-                          </button>
-                          <button type="button" class="btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-tag"></i>
-                          </button>
-                          <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn cur-p bgc-white no-after dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ti-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu fsz-sm" aria-labelledby="btnGroupDrop1">
-                              <li>
-                                <a href="" class="d-b td-n pY-5 pX-10 bgcH-grey-100 c-grey-700">
-                                  <i class="ti-trash mR-10"></i>
-                                  <span>Delete</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="" class="d-b td-n pY-5 pX-10 bgcH-grey-100 c-grey-700">
-                                  <i class="ti-alert mR-10"></i>
-                                  <span>Mark as Spam</span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="" class="d-b td-n pY-5 pX-10 bgcH-grey-100 c-grey-700">
-                                  <i class="ti-star mR-10"></i>
-                                  <span>Star</span>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="peer">
-                        <div class="btn-group" role="group">
-                          <button type="button" class="fsz-xs btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-angle-left"></i>
-                          </button>
-                          <button type="button" class="fsz-xs btn bgc-white bdrs-2 mR-3 cur-p">
-                            <i class="ti-angle-right"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="email-content-wrapper">
-                      <!-- Header -->
-                      <div class="peers ai-c jc-sb pX-40 pY-30">
-                        <div class="peers peer-greed">
-                          <div class="peer mR-20">
-                            <img class="bdrs-50p w-3r h-3r" alt="" src="https://randomuser.me/api/portraits/men/11.jpg">
-                          </div>
-                          <div class="peer">
-                            <small>Nov, 02 2017</small>
-                            <h5 class="c-grey-900 mB-5">John Doe</h5>
-                            <span>To: email@gmail.com</span>
-                          </div>
-                        </div>
-                        <div class="peer">
-                          <a href="" class="btn btn-danger bdrs-50p p-15 lh-0">
-                            <i class="fa fa-reply"></i>
-                          </a>
-                        </div>
-                      </div>
+              </article>
 
-                      <!-- Content -->
-                      <div class="bdT pX-40 pY-30">
-                        <h4>Title of this email goes here</h4>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        </p>
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div class="reader-card">
+                <div class="reader-collapsed">
+                  <div class="reader-avatar ma-1">SK</div>
+                  <div class="reader-collapsed-from">Sara Kim</div>
+                  <div class="reader-collapsed-preview">Looks great, Leo. I'll handle the FullCalendar dark-mode pass today and ping when staging is ready.</div>
+                  <div class="reader-collapsed-time">09:24</div>
                 </div>
               </div>
+
+              <div class="reader-card">
+                <div class="reader-collapsed">
+                  <div class="reader-avatar ma-3">MD</div>
+                  <div class="reader-collapsed-from">Mira Doe</div>
+                  <div class="reader-collapsed-preview">Nice work — the bundle delta looks clean. Two small notes inline on the migration doc.</div>
+                  <div class="reader-collapsed-time">09:36</div>
+                </div>
+              </div>
+
+              <div class="reader-replybar">
+                <input type="text" placeholder="Reply to Leo, Sara, Mira…">
+                <button class="reply-send" aria-label="Send reply">
+                  <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+                </button>
               </div>
             </div>
-          </div>
+          </section>
+        </section>
         </main>
-
-        <!-- ### $App Screen Footer ### -->
-        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
-          <span>Copyright © 2024 Designed by <a href="https://colorlib.com" target="_blank" rel="nofollow noopener noreferrer" title="Colorlib">Colorlib</a>. All rights reserved.</span>
-        </footer>
+        <div data-shell-footer></div>
       </div>
     </div>
   </body>

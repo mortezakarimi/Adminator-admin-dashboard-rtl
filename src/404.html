@@ -1,22 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>404</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Inter+Tight:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+    <title>404 · 2026 Redesign Preview</title>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('dash26-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
   </head>
-  <body class="app">
-    <div class='pos-a t-0 l-0 bgc-white w-100 h-100 d-f fxd-r fxw-w ai-c jc-c pos-r p-30'>
-      <div class='mR-60'>
-        <img alt='#' src='assets/static/images/404.png' />
-      </div>
-
-      <div class='d-f jc-c fxd-c'>
-        <h1 class='mB-30 fw-900 lh-1 c-red-500' style="font-size: 60px;">404</h1>
-        <h3 class='mB-10 fsz-lg c-grey-900 tt-c'>Oops Page Not Found</h3>
-        <p class='mB-30 fsz-def c-grey-700'>The page you are looking for does not exist or has been moved.</p>
-        <div>
-          <a href="index.html" type='primary' class='btn btn-primary'>Go to Home</a>
+  <body>
+    <div class="error-shell">
+      <div class="error-card">
+        <span class="error-eyebrow">Error · Not found</span>
+        <div class="error-code">404</div>
+        <h1 class="error-title">This page wandered off</h1>
+        <p class="error-sub">The link may be outdated, or the page might have been moved or deleted. Try the dashboard to get back on track.</p>
+        <div class="error-actions">
+          <a href="index.html" class="btn btn--primary">
+            <svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg>
+            Back to dashboard
+          </a>
+          <a href="javascript:history.back()" class="btn btn--ghost">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Go back
+          </a>
+        </div>
+        <div class="error-meta">
+          <span><strong>STATUS</strong> 404</span>
+          <span><strong>CODE</strong> NOT_FOUND</span>
+          <span><strong>REF</strong> a8c1-9f23</span>
         </div>
       </div>
     </div>

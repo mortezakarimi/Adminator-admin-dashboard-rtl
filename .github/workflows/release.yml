@@ -1,50 +1,104 @@
-name: NodeJS with Webpack
+name: Build and Release
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-master
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
 
-    strategy:
-      matrix:
-        node-version: [20.x]
-    
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
 
-    - name: Build
-      run: |
-        npm install
-        npm run release:minified
-        zip -r -j static_minified.zip dist/*
-        npm run release:unminified
-        zip -r -j static_unminified.zip dist/*
-    
-    - name: Get version
-      run: echo "::set-output name=version::v$(./ci/getVersion.sh)"
-      id: version
+      - name: Get version
+        id: version
+        run: echo "version=v$(./ci/getVersion.sh)" >> "$GITHUB_OUTPUT"
 
-    - name: Verify version
-      run: |
-        ./ci/verifyVersion.sh ${{ steps.version.outputs.version }}
+      - name: Check whether this version is already released
+        id: check
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] \
+            || { echo "::error::Invalid release version: $VERSION"; exit 1; }
+          if [ -n "$(git ls-remote --tags origin "refs/tags/$VERSION")" ]; then
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::$VERSION is already released; validating without rebuilding archives."
+          else
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+          fi
 
-    # Verify changelog has entry with new version
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      with:
-        name: ${{ steps.version.outputs.version }}
-        tag_name: ${{ steps.version.outputs.version }}
-        files: |
-          static_minified.zip
-          static_unminified.zip
-        fail_on_unmatched_files: true
-        prerelease: false
-        draft: false
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Lint, test, and build minified assets
+        run: npm run check
+
+      - name: Install Chromium
+        if: steps.check.outputs.should_release == 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Verify production pages
+        if: steps.check.outputs.should_release == 'true'
+        run: npm run test:browser
+
+      - name: Archive minified release
+        if: steps.check.outputs.should_release == 'true'
+        run: (cd dist && zip -r ../static_minified.zip .)
+
+      - name: Build and archive unminified release
+        if: steps.check.outputs.should_release == 'true'
+        run: |
+          npm run release:unminified
+          (cd dist && zip -r ../static_unminified.zip .)
+
+      - name: Verify release archives
+        if: steps.check.outputs.should_release == 'true'
+        run: |
+          for archive in static_minified.zip static_unminified.zip; do
+            unzip -t "$archive"
+            unzip -Z1 "$archive" | grep -x 'index.html' >/dev/null \
+              || { echo "::error::$archive is missing index.html"; exit 1; }
+          done
+
+      - name: Prepare documented release notes
+        if: steps.check.outputs.should_release == 'true'
+        run: node scripts/release-notes.mjs > release-notes.md
+
+      - name: Create GitHub Release
+        if: steps.check.outputs.should_release == 'true'
+        uses: softprops/action-gh-release@v3
+        with:
+          name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ steps.version.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          files: |
+            static_minified.zip
+            static_unminified.zip
+          fail_on_unmatched_files: true
+          prerelease: false
+          draft: false
+          body_path: release-notes.md
+          generate_release_notes: true

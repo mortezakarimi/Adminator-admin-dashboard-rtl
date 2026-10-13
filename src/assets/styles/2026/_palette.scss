@@ -1,0 +1,173 @@
+/* ============ COMMAND PALETTE (⌘K) ============ */
+
+.palette-backdrop {
+  position: fixed; inset: 0;
+  background: rgb(15 23 42 / 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 16px 16px;
+  animation: palette-fade 160ms ease both;
+}
+
+body.has-palette-open .palette-backdrop {
+  display: flex;
+}
+
+@keyframes palette-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.palette-modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 70vh;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: palette-rise 200ms cubic-bezier(.2,.7,.2,1) both;
+}
+
+@keyframes palette-rise {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.palette-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.palette-icon {
+  width: 18px; height: 18px;
+  color: var(--t-muted);
+  flex-shrink: 0;
+}
+
+.palette-input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: 15px;
+  color: var(--t-base);
+  font-family: inherit;
+  padding: 4px 0;
+  min-width: 0;
+}
+.palette-input::placeholder { color: var(--t-light); }
+
+.palette-esc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: var(--bg-muted);
+  color: var(--t-muted);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+
+.palette-results {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px;
+}
+.palette-results::-webkit-scrollbar { width: 4px; }
+.palette-results::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.palette-result {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 9px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 120ms;
+}
+.palette-result:hover { background: var(--bg-hover); }
+.palette-result.is-selected {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.palette-result-icon {
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 6px;
+  background: var(--bg-muted);
+  color: var(--t-muted);
+  flex-shrink: 0;
+}
+.palette-result.is-selected .palette-result-icon {
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+  color: var(--primary);
+}
+.palette-result-icon svg { width: 14px; height: 14px; }
+
+.palette-result-label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--t-base);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.palette-result.is-selected .palette-result-label { color: var(--primary); font-weight: 600; }
+
+.palette-result-section {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--t-light);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.palette-result.is-selected .palette-result-section { color: var(--primary); opacity: 0.8; }
+
+.palette-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--t-muted);
+  font-size: 13px;
+}
+
+.palette-foot {
+  display: flex;
+  gap: 18px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border-soft);
+  background: var(--bg-card);
+  font-size: 11px;
+  color: var(--t-muted);
+}
+.palette-foot kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  padding: 1.5px 5px;
+  border-radius: 4px;
+  background: var(--bg-muted);
+  color: var(--t-muted);
+  border: 1px solid var(--border);
+  margin-right: 4px;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 600px) {
+  .palette-backdrop { padding-top: 6vh; }
+  .palette-foot { flex-wrap: wrap; gap: 10px; font-size: 10px; }
+}

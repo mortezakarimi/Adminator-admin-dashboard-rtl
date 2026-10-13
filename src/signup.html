@@ -1,104 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Sign Up</title>
-    <style>
-      #loader {
-        transition: all 0.3s ease-in-out;
-        opacity: 1;
-        visibility: visible;
-        position: fixed;
-        height: 100vh;
-        width: 100%;
-        background: #fff;
-        z-index: 90000;
-      }
-
-      #loader.fadeOut {
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .spinner {
-        width: 40px;
-        height: 40px;
-        position: absolute;
-        top: calc(50% - 20px);
-        left: calc(50% - 20px);
-        background-color: #333;
-        border-radius: 100%;
-        -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-        animation: sk-scaleout 1.0s infinite ease-in-out;
-      }
-
-      @-webkit-keyframes sk-scaleout {
-        0% { -webkit-transform: scale(0) }
-        100% {
-          -webkit-transform: scale(1.0);
-          opacity: 0;
-        }
-      }
-
-      @keyframes sk-scaleout {
-        0% {
-          -webkit-transform: scale(0);
-          transform: scale(0);
-        } 100% {
-          -webkit-transform: scale(1.0);
-          transform: scale(1.0);
-          opacity: 0;
-        }
-      }
-    </style>
-  </head>
-  <body class="app">
-    <div id='loader'>
-      <div class="spinner"></div>
-    </div>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Inter+Tight:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+    <title>Sign up · 2026 Redesign Preview</title>
     <script>
-      window.addEventListener('load', function load() {
-        const loader = document.getElementById('loader');
-        setTimeout(function() {
-          loader.classList.add('fadeOut');
-        }, 300);
-      });
+      (function () {
+        try {
+          var saved = localStorage.getItem('dash26-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
     </script>
-    <div class="peers ai-s fxw-nw h-100vh">
-      <div class="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style='background-image: url("assets/static/images/bg.jpg")'>
-        <div class="pos-a centerXY">
-          <div class="bgc-white bdrs-50p pos-r" style='width: 120px; height: 120px;'>
-            <img class="pos-a centerXY" src="assets/static/images/logo.png" alt="">
+  </head>
+  <body>
+    <div class="auth-shell">
+      <aside class="auth-aside">
+        <div class="auth-brand">
+          <div class="logo">
+            <svg viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+              <path fill="#fff" d="M14.747 9.125c.527-1.426 1.736-2.573 3.317-2.573c1.643 0 2.792 1.085 3.318 2.573l6.077 16.867c.186.496.248.931.248 1.147c0 1.209-.992 2.046-2.139 2.046c-1.303 0-1.954-.682-2.264-1.611l-.931-2.915h-8.62l-.93 2.884c-.31.961-.961 1.642-2.232 1.642c-1.24 0-2.294-.93-2.294-2.17c0-.496.155-.868.217-1.023l6.233-16.867zm.34 11.256h5.891l-2.883-8.992h-.062l-2.946 8.992z"/>
+            </svg>
+          </div>
+          <div class="name">Adminator</div>
+        </div>
+        <div class="auth-aside-body">
+          <span class="auth-aside-eyebrow">2026 · v3.1 preview</span>
+          <h1>The dashboard your team actually wants to open.</h1>
+          <p>Faster builds, cleaner tokens, and a design system that scales from a single chart to a 12-screen ops cockpit.</p>
+          <div class="auth-quote">
+            "We replaced four bespoke admin tools with one Adminator workspace. The dark mode alone earned its keep."
+            <div class="auth-quote-author">
+              <div class="av">SK</div>
+              <div>Sara Kim · Head of Engineering, Northwind</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style='min-width: 320px;'>
-        <h4 class="fw-300 c-grey-900 mB-40">Register</h4>
-        <form>
-          <div class="mb-3">
-            <label class="form-label" class="text-normal text-dark">Username</label>
-            <input type="text" class="form-control" Placeholder='John Doe'>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" class="text-normal text-dark">Email Address</label>
-            <input type="email" class="form-control" Placeholder='name@email.com'>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" class="text-normal text-dark">Password</label>
-            <input type="password" class="form-control" placeholder="Password">
-          </div>
-          <div class="mb-3">
-            <label class="form-label" class="text-normal text-dark">Confirm Password</label>
-            <input type="password" class="form-control" placeholder="Password">
-          </div>
-          <div class="mb-3">
-            <button class="btn btn-primary btn-color">Register</button>
-          </div>
-        </form>
-      </div>
-    </div>
+        <div class="auth-aside-footer">
+          <span>© 2026</span>
+          <span>BUILT IN RIGA, LV</span>
+        </div>
+      </aside>
+      <main class="auth-main">
+        <div class="auth-main-top">
+          <a href="index.html" style="font-size: 12.5px; color: var(--t-muted); display: inline-flex; align-items: center; gap: 6px;">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to home
+          </a>
+          <div class="switch-link">Already have an account? <a href="signin.html">Sign in</a></div>
+        </div>
 
+        <div class="auth-card">
+          <h2>Create your workspace</h2>
+          <p class="sub">14-day trial · no card required · invite your team in one click.</p>
+
+          <form class="auth-form" onsubmit="event.preventDefault(); window.location='index.html';">
+            <div class="field">
+              <label class="field-label" for="name">Full name</label>
+              <input id="name" class="input" type="text" placeholder="Jane Doe" autocomplete="name" required>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="email">Work email</label>
+              <div class="input-icon">
+                <span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+                <input id="email" class="input" type="email" placeholder="jane@company.com" autocomplete="email" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="workspace">Workspace URL</label>
+              <div class="input-group">
+                <span class="addon">adminator.app/</span>
+                <input id="workspace" class="input" type="text" placeholder="acme" required>
+              </div>
+              <div class="field-help">Lowercase letters, numbers, and hyphens only.</div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="password">Password <span class="req">*</span></label>
+              <div class="input-icon">
+                <span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                <input id="password" class="input" type="password" placeholder="At least 12 characters" autocomplete="new-password" required minlength="12">
+              </div>
+              <div class="progress thin"><div class="progress-fill success" style="width: 75%;"></div></div>
+            </div>
+
+            <label class="check">
+              <input type="checkbox" checked required>
+              <span class="box"></span>
+              I agree to the <a href="#" style="color: var(--primary); font-weight: 600; margin: 0 4px;">Terms</a> and <a href="#" style="color: var(--primary); font-weight: 600; margin-left: 4px;">Privacy Policy</a>
+            </label>
+
+            <button class="btn btn--primary auth-submit" type="submit">
+              Create account
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </button>
+          </form>
+
+          <div class="auth-divider">or sign up with</div>
+
+          <div class="social-row">
+            <a class="social-btn" href="#" aria-label="Continue with Google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22 12.2c0-.7-.06-1.4-.18-2.04H12v3.86h5.62a4.81 4.81 0 0 1-2.08 3.16v2.62h3.36C20.85 17.96 22 15.36 22 12.2z"/><path fill="#34A853" d="M12 22c2.7 0 4.96-.9 6.62-2.4l-3.36-2.62c-.94.62-2.12.98-3.26.98-2.5 0-4.62-1.7-5.38-3.96H3.16v2.7A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.62 13.98a6 6 0 0 1 0-3.96V7.32H3.16a10 10 0 0 0 0 9.36z"/><path fill="#EA4335" d="M12 6.04c1.46 0 2.78.5 3.82 1.5l2.86-2.86A10 10 0 0 0 12 2 10 10 0 0 0 3.16 7.32l3.46 2.7C7.38 7.74 9.5 6.04 12 6.04z"/></svg> Google</a>
+            <a class="social-btn" href="#" aria-label="Continue with GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.04c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.39 1.24-3.23-.13-.3-.54-1.53.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.25 2.88.12 3.18.77.84 1.24 1.92 1.24 3.23 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5z"/></svg> GitHub</a>
+            <a class="social-btn" href="#" aria-label="Continue with Apple"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.18 1.78-3.22 1.86-3.27-1.02-1.49-2.6-1.7-3.16-1.72-1.34-.13-2.62.79-3.3.79-.7 0-1.74-.78-2.86-.75-1.47.02-2.83.86-3.59 2.18-1.54 2.66-.39 6.6 1.1 8.76.74 1.06 1.6 2.25 2.74 2.21 1.1-.05 1.51-.71 2.84-.71s1.7.71 2.86.69c1.18-.02 1.93-1.07 2.65-2.14.84-1.23 1.18-2.43 1.2-2.49-.03-.01-2.3-.88-2.32-3.55zM14.27 5.6c.6-.74 1.01-1.74.9-2.75-.87.04-1.93.58-2.55 1.3-.55.65-1.04 1.69-.91 2.67.97.07 1.96-.49 2.56-1.22z"/></svg> Apple</a>
+          </div>
+        </div>
+
+        <div class="auth-main-bottom">
+          Already a customer? <a href="signin.html" style="color: var(--primary); font-weight: 600;">Sign in</a>
+        </div>
+      </main>
+    </div>
   </body>
 </html>

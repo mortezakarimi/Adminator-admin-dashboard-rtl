@@ -1,22 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>500</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Inter+Tight:wght@500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap">
+    <title>500 · 2026 Redesign Preview</title>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('dash26-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
   </head>
-  <body class="app">
-    <div class='pos-a t-0 l-0 bgc-white w-100 h-100 d-f fxd-r fxw-w ai-c jc-c pos-r p-30'>
-      <div class='mR-60'>
-        <img alt='#' src='assets/static/images/500.png' />
-      </div>
-
-      <div class='d-f jc-c fxd-c'>
-        <h1 class='mB-30 fw-900 lh-1 c-red-500' style="font-size: 60px;">500</h1>
-        <h3 class='mB-10 fsz-lg c-grey-900 tt-c'>Internal server error</h3>
-        <p class='mB-30 fsz-def c-grey-700'>Something goes wrong with our servers, please try again later.</p>
-        <div>
-          <a href="index.html" type='primary' class='btn btn-primary'>Go to Home</a>
+  <body>
+    <div class="error-shell">
+      <div class="error-card">
+        <span class="error-eyebrow">Error · Server</span>
+        <div class="error-code">500</div>
+        <h1 class="error-title">Something broke on our end</h1>
+        <p class="error-sub">We've been notified and are looking into it. Please try again in a moment, or head back to the dashboard.</p>
+        <div class="error-actions">
+          <a href="javascript:location.reload()" class="btn btn--primary">
+            <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+            Try again
+          </a>
+          <a href="index.html" class="btn btn--ghost">
+            <svg viewBox="0 0 24 24"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg>
+            Dashboard
+          </a>
+        </div>
+        <div class="error-meta">
+          <span><strong>STATUS</strong> 500</span>
+          <span><strong>CODE</strong> INTERNAL_ERROR</span>
+          <span><strong>REF</strong> 7d2e-44b9</span>
         </div>
       </div>
     </div>

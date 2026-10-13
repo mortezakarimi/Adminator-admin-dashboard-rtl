@@ -53,21 +53,13 @@ const
 // @Output Files Names
 // -------------------
 
+/* In production the CSS filename is content-hashed so the 1-year immutable
+   cache (set at the CDN edge) flips automatically when the bundle changes —
+   stale stylesheets were the cause of post-deploy "did you hard-refresh?"
+   reports. Dev keeps the plain name so source maps and HMR stay readable. */
 const
   outputFiles = {
-    bundle : 'bundle.js',
-    vendor : 'vendor.js',
-    css    : 'style.css',
-  };
-
-
-// --------------------
-// @Entries Files Names
-// --------------------
-
-const
-  entries = {
-    js   : 'index.js',
+    css : IS_PRODUCTION ? 'style.[contenthash:8].css' : 'style.css',
   };
 
 
@@ -78,9 +70,8 @@ const
 module.exports = {
   paths,
   outputFiles,
-  entries,
   NODE_ENV,
   IS_DEVELOPMENT,
   IS_PRODUCTION,
-  MINIFY
+  MINIFY,
 };

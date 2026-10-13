@@ -1,0 +1,111 @@
+# GitHub Pages Configuration for Adminator Documentation
+
+# Site settings
+title: "Adminator 4 Documentation"
+description: "Complete guide for Adminator 4.0 — vanilla-JS admin dashboard with a token-driven CSS-variable design system. No jQuery, no Bootstrap."
+url: "https://puikinsh.github.io"
+baseurl: "/Adminator-admin-dashboard"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+remote_theme: just-the-docs/just-the-docs
+
+# Plugin settings
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-redirect-from   # 2026-05: docs migrated to adminator.colorlib.com/docs/ — every page redirects.
+
+# Just the Docs theme configuration
+color_scheme: nil
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 2
+  preview_words_before: 3
+  preview_words_after: 3
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+  button: false
+
+# Enable custom CSS
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Heading anchor links appear on hover over h1-h6 tags
+heading_anchors: true
+
+# Footer
+footer_content: "Copyright &copy; 2026 Colorlib. Distributed under an <a href=\"https://github.com/puikinsh/Adminator-admin-dashboard/blob/master/LICENSE\">MIT license.</a>"
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Navigation Structure
+nav_sort: case_insensitive
+
+# Aux links for the upper right navigation
+aux_links:
+  "GitHub Repository":
+    - "//github.com/puikinsh/Adminator-admin-dashboard"
+  "Live Demo":
+    - "//preview.colorlib.com/theme/adminator/index.html"
+
+# Makes Aux links open in a new tab
+aux_links_new_tab: true
+
+# SEO
+author: "Colorlib"
+twitter:
+  username: colorlib
+social:
+  name: "Colorlib"
+  links:
+    - https://github.com/puikinsh/Adminator-admin-dashboard
+    - https://colorlib.com
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+
+# Code highlighting
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    block:
+      line_numbers: false
+      start_line: 1
+
+# Include
+include:
+  - _pages
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+    values:
+      layout: "default" 

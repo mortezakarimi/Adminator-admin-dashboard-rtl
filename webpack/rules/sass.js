@@ -27,7 +27,7 @@ const loaders = [
   {
     loader: 'css-loader',
     options: {
-      sourceMap : manifest.IS_DEVELOPMENT
+      sourceMap : manifest.IS_DEVELOPMENT,
     },
   },
   {
@@ -47,16 +47,19 @@ const loaders = [
     loader: 'sass-loader',
     options: {
       sourceMap: manifest.IS_DEVELOPMENT,
+      api: 'modern-compiler',
       sassOptions: {
-        outputStyle: manifest.MINIFY ? 'compressed' : 'expanded',
-        includePaths: [
-          path.join('../../', 'node_modules'),
+        style: manifest.MINIFY ? 'compressed' : 'expanded',
+        loadPaths: [
+          path.resolve(__dirname, '../../node_modules'),
           path.join(manifest.paths.src, 'assets', 'styles'),
           path.join(manifest.paths.src, ''),
         ],
+        quietDeps: true,
+        verbose: false,
       },
-    }
-  }
+    },
+  },
 ];
 
 if (manifest.IS_PRODUCTION) {
@@ -69,7 +72,7 @@ if (manifest.IS_PRODUCTION) {
 
 const rule = {
   test: /\.scss$/,
-  use: loaders
+  use: loaders,
 };
 
 // -----------------

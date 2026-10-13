@@ -23,6 +23,8 @@ logs
 npm-debug.log*
 node_modules
 yarn.lock
+yarn-error.log*
+pnpm-lock.yaml
 
 # ----------------------------
 # Project Folders
@@ -30,3 +32,52 @@ yarn.lock
 
 build/
 dist/
+coverage/
+test-results/
+
+# ----------------------------
+# Development Files
+# ----------------------------
+
+*.map
+*.ts
+tsconfig.json
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# ----------------------------
+# Editor Directories
+# ----------------------------
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ----------------------------
+# OS Files
+# ----------------------------
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+CLAUDE.md
+release.md
+
+# ----------------------------
+# Local-only assets / tooling
+# ----------------------------
+
+# GitHub social-preview image (uploaded directly to repo settings, not committed)
+docs/social-preview.png
+scripts/social-preview.mjs
+
+# Release artifacts produced by build scripts
+static_minified.zip
+static_unminified.zip

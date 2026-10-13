@@ -1,10 +1,8 @@
 module.exports = {
-  test    : /\.(png|gif|jpg?g|svg)$/i,
+  test    : /\.(png|gif|jpe?g|webp|avif|svg)$/i,
   exclude : /(node_modules)/,
-  use     : [{
-    loader: 'file-loader',
-    options: {
-      outputPath: 'assets',
-    },
-  }],
+  type    : 'asset/resource',
+  generator: {
+    filename: 'assets/[name].[contenthash:8][ext]',
+  },
 };
